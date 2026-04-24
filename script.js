@@ -12,8 +12,8 @@ const runningBamboo = [
     { id: "PHY-NIG-HEN", name: "Phyllostachys nigra 'Henonis'", hardy: "-23C", ht: "10m", price: "950 SEK", img: "images/nigra-henonis.jpg", notes: "Giant grey timber. Very hardy." },
     { id: "PHY-NIG-PUN", name: "Phyllostachys nigra 'Punctata'", hardy: "-20C", ht: "7m", price: "850 SEK", img: "images/nigra-punctata.jpg", notes: "Speckled black culms." },
     { id: "PHY-BIS-NOM", name: "Phyllostachys bissetii", hardy: "-26C", ht: "7m", price: "550 SEK", notes: "Best Swedish windbreak." },
-    { id: "PHY-DEC-NOM", name: "Phyllostachys decora", hardy: "-22C", ht: "6m", price: "700 SEK", notes: "Drought tolerant runner." },
-    { id: "PHY-NUD-NOM", name: "Phyllostachys nuda", hardy: "-26C", ht: "6m", price: "650 SEK", notes: "Early purple / black nodes." },
+    { id: "PHY-DEC-NOM", name: "Phyllostachys decora", hardy: "-22C", ht: "6m", price: "700 SEK", img: "images/decora.jpg", notes: "Drought tolerant runner." },
+    { id: "PHY-NUD-NOM", name: "Phyllostachys nuda", hardy: "-26C", ht: "6m", price: "650 SEK", img: "images/nuda.jpg", notes: "Early purple / black nodes." },
     { id: "SAS-KUR-NOM", name: "Sasa kurilensis", hardy: "-30C", ht: "2m", price: "450 SEK", notes: "Northernmost species. Large leaves." },
     { id: "BAS-QIN-NOM", name: "Bashania qingchengshanensis", hardy: "-20C", ht: "4m", price: "600 SEK", notes: "Strong, stiff culms." },
     { id: "SEM-FAS-NOM", name: "Semiarundinaria fastuosa", hardy: "-20C", ht: "8m", price: "850 SEK", notes: "Upright columnar habit." }
@@ -62,43 +62,40 @@ function renderProducts(data, containerId) {
     });
 }
 
-// Validation & Mailing List Retention logic
 function saveSubscriberLocally(email) {
     let subscribers = JSON.parse(localStorage.getItem('bamboo_mailing_list')) || [];
-    if (!subscribers.includes(email)) {
-        subscribers.push(email);
+    const normalizedEmail = email.toLowerCase().trim();
+    if (!subscribers.includes(normalizedEmail)) {
+        subscribers.push(normalizedEmail);
         localStorage.setItem('bamboo_mailing_list', JSON.stringify(subscribers));
-        return true; // New subscriber added
+        return true; 
     }
-    return false; // Already exists
+    return false; 
 }
 
 async function handleFormSubmit(event, subject) {
     event.preventDefault();
     const form = event.target;
     const newsletterArea = document.getElementById('newsletter-area');
-    const originalNewsletterHTML = newsletterArea ? newsletterArea.innerHTML : null;
+    const originalHTML = newsletterArea ? newsletterArea.innerHTML : null;
     
     const data = new FormData(form);
     const emailValue = data.get('email');
     data.append('_subject', subject);
 
-    // If it's a newsletter, check local list first
     if (form.id === 'subscribe-form') {
-        const isNew = saveSubscriberLocally(emailValue);
-        if (!isNew) {
+        if (!saveSubscriberLocally(emailValue)) {
             newsletterArea.innerHTML = "<h3>Note</h3><p>You are already subscribed to our list!</p>";
             setTimeout(() => {
-                newsletterArea.innerHTML = originalNewsletterHTML;
+                newsletterArea.innerHTML = originalHTML;
                 document.getElementById('subscribe-form').addEventListener('submit', (e) => handleFormSubmit(e, 'Newsletter Subscription'));
             }, 4000);
-            return; // Stop here, don't send to Formspree again
+            return;
         }
     }
 
     try {
-        // REPLACE "YOUR_FORM_ID_HERE" with your actual Formspree ID  https://formspree.io/f/mpqkkkep check that forms are working
-        const response = await fetch("https://formspree.io/f/mpqkkkep", {
+        const response = await fetch("https://formspree.io", {
             method: 'POST',
             body: data,
             headers: { 'Accept': 'application/json' }
@@ -108,7 +105,7 @@ async function handleFormSubmit(event, subject) {
             if (form.id === 'subscribe-form') {
                 newsletterArea.innerHTML = "<h3>Success!</h3><p>You have been added to our mailing list.</p>";
                 setTimeout(() => {
-                    newsletterArea.innerHTML = originalNewsletterHTML;
+                    newsletterArea.innerHTML = originalHTML;
                     document.getElementById('subscribe-form').addEventListener('submit', (e) => handleFormSubmit(e, 'Newsletter Subscription'));
                 }, 5000);
             } else {
