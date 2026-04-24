@@ -11,12 +11,12 @@ const runningBamboo = [
     { id: "PHY-NIG-NOM", name: "Phyllostachys nigra", hardy: "-18C", ht: "5m", price: "850 SEK", img: "images/nigra-black.jpg", notes: "Jet black culms. Needs shelter." },
     { id: "PHY-NIG-HEN", name: "Phyllostachys nigra 'Henonis'", hardy: "-23C", ht: "10m", price: "950 SEK", img: "images/nigra-henonis.jpg", notes: "Giant grey timber. Very hardy." },
     { id: "PHY-NIG-PUN", name: "Phyllostachys nigra 'Punctata'", hardy: "-20C", ht: "7m", price: "850 SEK", img: "images/nigra-punctata.jpg", notes: "Speckled black culms." },
-    { id: "PHY-BIS-NOM", name: "Phyllostachys bissetii", hardy: "-26C", ht: "7m", price: "550 SEK", notes: "Best Swedish windbreak." },
+    { id: "PHY-BIS-NOM", name: "Phyllostachys bissetii", hardy: "-26C", ht: "7m", price: "550 SEK", img: "images/bissetii.jpg", notes: "Best Swedish windbreak." },
     { id: "PHY-DEC-NOM", name: "Phyllostachys decora", hardy: "-22C", ht: "6m", price: "700 SEK", img: "images/decora.jpg", notes: "Drought tolerant runner." },
     { id: "PHY-NUD-NOM", name: "Phyllostachys nuda", hardy: "-26C", ht: "6m", price: "650 SEK", img: "images/nuda.jpg", notes: "Early purple / black nodes." },
-    { id: "SAS-KUR-NOM", name: "Sasa kurilensis", hardy: "-30C", ht: "2m", price: "450 SEK", notes: "Northernmost species. Large leaves." },
-    { id: "BAS-QIN-NOM", name: "Bashania qingchengshanensis", hardy: "-20C", ht: "4m", price: "600 SEK", notes: "Strong, stiff culms." },
-    { id: "SEM-FAS-NOM", name: "Semiarundinaria fastuosa", hardy: "-20C", ht: "8m", price: "850 SEK", notes: "Upright columnar habit." }
+    { id: "SAS-KUR-NOM", name: "Sasa kurilensis", hardy: "-30C", ht: "2m", price: "450 SEK", img: "images/sasa-kurilensis.jpg", notes: "Northernmost species. Large leaves." },
+    { id: "BAS-QIN-NOM", name: "Bashania qingchengshanensis", hardy: "-20C", ht: "4m", price: "600 SEK", img: "images/bashania-qing.jpg", notes: "Strong, stiff culms." },
+    { id: "SEM-FAS-NOM", name: "Semiarundinaria fastuosa", hardy: "-20C", ht: "8m", price: "850 SEK", img: "images/semiarundinaria-fastuosa.jpg", notes: "Upright columnar habit." }
 ];
 
 const clumpingBamboo = [
