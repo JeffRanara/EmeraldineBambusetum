@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emeraldine Bambusetum | Swedish Grown Bamboo</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Playfair+Display:wght@700&family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <!-- Logo now acts as a Home button -->
+            <div class="logo" onclick="showPage('home')" style="cursor: pointer;">Emeraldine Bambusetum</div>
+            
+            <!-- Mobile Menu Toggle -->
+            <button class="menu-toggle" id="mobile-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <ul class="nav-links" id="nav-list">
+                <li><a href="#" onclick="showPage('home')">Home</a></li>
+                <li><a href="#" onclick="showPage('about')">About</a></li>
+                <li><a href="#" onclick="showPage('products')">Products</a></li>
+                <li><a href="#" onclick="showPage('contact')">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="content-area">
+        <!-- Home Page -->
+        <section id="home" class="page-content">
+            <div class="hero">
+                <h1>Welcome to Emeraldine Bambusetum</h1>
+                <p>We offer you Swedish-grown running and clumping bamboos for ornamental and practical use! Browse around to discover what you would like to buy.</p>
+                <button class="btn" onclick="showPage('products')">Browse Catalog</button>
+            </div>
+            
+            <div class="newsletter-section">
+                <h3>Newsletter Subscription</h3>
+                <p>Join our list to receive updates on Swedish bamboo care and new stock.</p>
+                <form id="subscribe-form">
+                    <input type="email" placeholder="Your email address" required>
+                    <button type="submit" class="btn-alt">Subscribe</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- About Page -->
+        <section id="about" class="page-content" style="display:none;">
+            <h2>About Our Nursery</h2>
+            <p>At Emeraldine Bambusetum, each bamboo species has been successfully grown in Skåne for many growing seasons. Many will do well even much further north. Check the hardiness of the species or contact us for advice.</p>
+            <div class="dev-disclaimer">
+                <p>Disclaimers: This page is under development.</p>
+            </div>
+        </section>
+
+        <!-- Products Page -->
+        <section id="products" class="page-content" style="display:none;">
+            <h2 class="cat-header">Running Bamboo</h2>
+            <div class="product-grid" id="running-grid"></div>
+
+            <h2 class="cat-header">Clumping Bamboo</h2>
+            <div class="product-grid" id="clumping-grid"></div>
+        </section>
+
+        <!-- Contact Page -->
+        <section id="contact" class="page-content" style="display:none;">
+            <h2>Contact & Orders</h2>
+            <div class="contact-grid">
+                <div class="contact-details">
+                    <p><strong>Home Delivery:</strong> All of Skåne via standard PostNord rates.</p>
+                    <p><strong>Local Pickup:</strong> Sjöbo, Skåne (GPS via WhatsApp).</p>
+                    <p><strong>Hours:</strong> Tue - Sat, 9:00 - 14:00.</p>
+                    <p><em>Please order 48 hours in advance for processing.</em></p>
+                </div>
+                <form id="contact-form">
+                    <input type="text" placeholder="Name" required>
+                    <input type="email" placeholder="Email" required>
+                    <textarea placeholder="Your message or order inquiry" rows="6" required></textarea>
+                    <button type="submit" class="btn">Send Email</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-links">
+            <a href="https://instagram.com" target="_blank">Instagram</a>
+            <a href="https://facebook.com" target="_blank">Facebook</a>
+            <a href="mailto:jeff.ranara@alum.mit.edu">Email Support</a>
+        </div>
+        <p>&copy; 2024 Emeraldine Bambusetum</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
