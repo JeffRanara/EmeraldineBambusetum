@@ -64,25 +64,40 @@ function renderProducts(data, containerId) {
 
 // Validation & Mailing List Retention logic
 function saveSubscriberLocally(email) {
-    // 1. Retrieve the existing list from browser storage (parsed as JSON array)
-    // 2. If it doesn't exist, start with an empty array
     let subscribers = JSON.parse(localStorage.getItem('bamboo_mailing_list')) || [];
-    
-    // 3. Append the new email only if it's not already in the list
     if (!subscribers.includes(email)) {
         subscribers.push(email);
-        // 4. Save the updated list back to the browser storage
         localStorage.setItem('bamboo_mailing_list', JSON.stringify(subscribers));
+        return true; // New subscriber added
     }
+    return false; // Already exists
 }
 
 async function handleFormSubmit(event, subject) {
     event.preventDefault();
     const form = event.target;
+    const newsletterArea = document.getElementById('newsletter-area');
+    const originalNewsletterHTML = newsletterArea ? newsletterArea.innerHTML : null;
+    
     const data = new FormData(form);
+    const emailValue = data.get('email');
     data.append('_subject', subject);
 
+    // If it's a newsletter, check local list first
+    if (form.id === 'subscribe-form') {
+        const isNew = saveSubscriberLocally(emailValue);
+        if (!isNew) {
+            newsletterArea.innerHTML = "<h3>Note</h3><p>You are already subscribed to our list!</p>";
+            setTimeout(() => {
+                newsletterArea.innerHTML = originalNewsletterHTML;
+                document.getElementById('subscribe-form').addEventListener('submit', (e) => handleFormSubmit(e, 'Newsletter Subscription'));
+            }, 4000);
+            return; // Stop here, don't send to Formspree again
+        }
+    }
+
     try {
+        // REPLACE "YOUR_FORM_ID_HERE" with your actual Formspree ID
         const response = await fetch("https://formspree.io/f/mpqkkkep", {
             method: 'POST',
             body: data,
@@ -90,13 +105,13 @@ async function handleFormSubmit(event, subject) {
         });
 
         if (response.ok) {
-            // SEPARATION OF LOGIC:
             if (form.id === 'subscribe-form') {
-                // For Newsletter: Append to local JSON-style list and show inline success
-                saveSubscriberLocally(data.get('email'));
-                document.getElementById('newsletter-area').innerHTML = "<h3>Success!</h3><p>You have been added to our mailing list.</p>";
+                newsletterArea.innerHTML = "<h3>Success!</h3><p>You have been added to our mailing list.</p>";
+                setTimeout(() => {
+                    newsletterArea.innerHTML = originalNewsletterHTML;
+                    document.getElementById('subscribe-form').addEventListener('submit', (e) => handleFormSubmit(e, 'Newsletter Subscription'));
+                }, 5000);
             } else {
-                // For Contact Form: Just show the separate success page
                 showPage('success-page');
             }
             form.reset();
@@ -116,7 +131,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const navList = document.getElementById('nav-list');
     menuToggle.addEventListener('click', () => navList.classList.toggle('active'));
 
-    // Separate Event Listeners for the two functions
     document.getElementById('contact-form').addEventListener('submit', (e) => handleFormSubmit(e, 'New Contact Message'));
     document.getElementById('subscribe-form').addEventListener('submit', (e) => handleFormSubmit(e, 'Newsletter Subscription'));
 });
